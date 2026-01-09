@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HTML-Form</title>
+</head>
+<body>
+    <!-- 
+    1. Name
+    2. Phone
+    3. Email ID
+    4. Address
+    5. Gender
+    6. Occupation Type
+    7. Interests
+    8. Description -->
+
+    <form action="">
+        <label for="user_name">Enter Your Name</label>
+        <input placeholder="Yash Deshmukh" type="text" name="user_name">
+        <br><br>
+        <label for="Phone_number">Phone Number</label>
+        <input placeholder="7350604040" name="Phone_number" type="tel"> 
+        <br><br>
+        <label for="Email">Enter your Email</label>
+        <input placeholder="erdeshmukhyash@gmail.com" type="email" name="Email" >
+
+        <br>
+        <br>
+        <label for="Address">Enter Your Address</label>
+        <input placeholder="Narhe , Pune 411041" type="text" name="Address">
+        <br>
+        <br>
+
+        <label for="Gender">Gender</label>
+        <input type="radio" name="Gender" value="male">
+        <input type="radio" name="Gender" value="female">
+
+        <br><br>
+        <select  name="" id="">
+            <option value="Teacher">Teacher</option>
+            <option value="Student">Student</option>
+        </select>
+
+        <br><br>
+
+        <label for="Interests">Enter Your Hobis</label><br>
+        <input type="checkbox" value="music" name="Interests"> Music <br>
+        <input type="checkbox" value="coding" name="Interests"> Coding <br>
+        <input type="checkbox" value="Reading" name="Interests"> Reading <br>
+        <input type="checkbox" value="Sports" name="Interests"> Sports <br>
+        <br><br>
+        <label for="">Enter Description About You</label><br>
+        <textarea name="" id=""></textarea>
+
+    <input type="submit">    
+</form>
+
+    <!-- {
+    "user_name" : "Yash Deshmukh",
+    "Gender" : "male"
+    }
+    -->
+
+</body>
+</html>
