@@ -1,0 +1,6 @@
+- BOX MODEL
+
+    - MARGIN
+    - PADDING
+    - BORDER 
+    - OUTLINE
