@@ -1,0 +1,6 @@
+- what is function 
+- types of function defining
+- types of parameters
+- first class function
+- higher order functions
+-  
