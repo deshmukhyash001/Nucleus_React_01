@@ -9,7 +9,8 @@
 const FS = require("fs")
 const path = require("path")
 
-
+ console.log(new Date())
+ console.log()
 function getLogFileName() {
     const now = new Date()
 
@@ -18,7 +19,7 @@ function getLogFileName() {
         String(now.getMonth() + 1).padStart(2, "0") + "-" +
         String(now.getDate()).padStart(2, "0")
 
-    return date+".log"
+    return date+".log" //2026-02-25.log
 }
 
 
@@ -42,41 +43,46 @@ function loginfo(Message){
 
 ROOT = "/Users/apple/Desktop/React.js/Projects/Project1/virtual_root_dir/"
 
+
+
 function create_directory(dirname = "untitled_dir"){
 
     if(dirname==="untitled_dir"){
 
         let num = 0
 
-        while(path_exists("dirname",dirname)){
-            num++;
-            dirname = dirname+num
+        while(path_exists("dirname",dirname+num)){
+            num += 1;
         }
-
-        console.log(dirname)
+        dirname = dirname+num
     }
 
-    if(path_exists("dirname",ROOT+dirname)){
+    if(path_exists("dirname",dirname)){
         return "Message : directory already exists."
     }
 
-    FS.mkdirSync(ROOT+dirname)
+    FS.mkdir(ROOT+dirname,(err,data)=>{
+        if(err) throw err
+    })
+
     loginfo(`directory created : ~:${dirname}`)
     return 'Message : directory "'+dirname+'" Successfully created';
 }
 
 function delete_directory(dirname){
 
-    if(path_exists("dirname",ROOT+dirname) == false){
+    if(path_exists("dirname",dirname) == false){
         return "Message : directory doesent exists."
     }
 
-    FS.rmdirSync(ROOT+path.dirname)
+    FS.renameSync(ROOT+dirname,ROOT+"bin/"+dirname)
+
+    loginfo(`directory moved to bin : ~:${dirname}`)
+    return "Message : directory moved to bin"
 }
 
 function check_directory(dirname){
     if(path_exists("dirname",dirname) == false){
-        console.log(ROOT+dirname)
 
         return "Message : directory doesent exists."
     }
@@ -161,13 +167,13 @@ function path_exists(path_type, new_name){
     }
 }
 
+
 // ##########################################################################
 // 4 Create a new file : create_file( <content of file> , <name of the file> )
 // ##########################################################################
 
 function create_file(data=" ",filename="untitled_file.txt"){
     
-    console.log("get 1")
 
     let name = filename
     let extension = ".txt"
@@ -178,16 +184,12 @@ function create_file(data=" ",filename="untitled_file.txt"){
         name = file[0]
         extension = file[1]
 
-        console.log(file)
-        console.log(extension)
     }
 
     fullname = name +"."+extension
 
-    console.log(fullname)
 
     if(path_exists("filename",fullname) && name != "untitled_file"){
-        console.log("get2")
         return "Message : File already exists choose another name for your file"
     }
 
@@ -195,43 +197,47 @@ function create_file(data=" ",filename="untitled_file.txt"){
 
         let num = 0
 
-        console.log(name+num+"."+extension)
 
         while(path_exists("filename",name+num+"."+extension)){
             num++;
         }
 
-        console.log(num)
-        console.log(name+num+"."+extension)
-
         fullname = name + num + "." + extension //untitled_file4.ext
     }
 
-    console.log("get3")
 
     FS.writeFile(ROOT+fullname,data,"utf-8",function(err,data){
         if(err) throw err;
     })
+
+    loginfo(`file created : ~:${filename}`)
+    return "Message : file created successfully "
 }
 
 function append_file(filename,data){
     FS.appendFile(filename,data,"utf-8",(err,data)=>{
         if(err) throw err;
-        return "Message : File changes done."
     })
+
+    loginfo(`file updated : ~:${filename}`)
+    return "Message : File changes done."
 }
 
 function edit_complete_file(filename,data){
     FS.writeFile(filename,data,"utf-8",(err,data)=>{
         if(err) throw err;
-        return "Message : data successfully edited"
     })
+
+    loginfo(`file updated : ~:${filename}`)
+    return "Message : File changes done."
 }
 
 
 function delete_file(file_name){
 
     FS.renameSync(ROOT+file_name,ROOT+"bin/"+file_name)
+
+    loginfo(`file moved to bin : ~:${filename}`)
     return "Message : Moved to bin"
 }
 
@@ -241,10 +247,15 @@ function rename(Ofilename,Nfilename){
     }
 
     FS.renameSync(ROOT+Ofilename,ROOT+Nfilename)
+
+    loginfo(`file(${Ofilename}) name changed to : ~:${filename}`)
     return "Message : Successfully rename the file"
 }
 
-delete_file("hello.js")
-
 directory_login()
+create_directory()
+
+console.log(FS.existsSync("/Users/apple/Desktop/React.js/CSS/style1.css"))
+
+
 module.exports = {check_directory,directory_login,rename,delete_directory,delete_file,edit_complete_file,create_file,append_file,file_infoo,create_directory}
