@@ -123,8 +123,9 @@ function directory_login(){
             if(err) throw err
         })
     }
-
+    
     create_directory("dirlogs")
+    create_directory("bin")
     loginfo("------ USER LOGIN SUCCESSFULLY ------")
     return "Message : The new root directry created successfully!"
 
@@ -229,15 +230,21 @@ function edit_complete_file(filename,data){
 
 
 function delete_file(file_name){
-    FS.unlinkSync(ROOT+file_name)
-    return "Message : Succefully deleted the file"
+
+    FS.renameSync(ROOT+file_name,ROOT+"bin/"+file_name)
+    return "Message : Moved to bin"
 }
 
 function rename(Ofilename,Nfilename){
+    if(path_exists("filename",Nfilename)){
+        return "Message : This Name already exists choose another name"
+    }
+
     FS.renameSync(ROOT+Ofilename,ROOT+Nfilename)
     return "Message : Successfully rename the file"
 }
 
+delete_file("hello.js")
 
 directory_login()
 module.exports = {check_directory,directory_login,rename,delete_directory,delete_file,edit_complete_file,create_file,append_file,file_infoo,create_directory}
