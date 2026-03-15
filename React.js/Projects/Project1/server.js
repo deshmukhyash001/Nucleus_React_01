@@ -1,7 +1,7 @@
 const server = require("express")
 const app = server()
 
-const {check_directory,directory_login} = require("./mod")
+const {check_directory,directory_login, create_file} = require("./mod")
 console.log(check_directory("dumy"))
 
 app.get("/file/check_child",(req,res)=>{
@@ -19,13 +19,19 @@ app.get("/file/check_child",(req,res)=>{
 })
 
 app.get("/file/dir_login",(req,res)=>{
-
     let message = directory_login()
 
     res.json({
         "message":message,
         }
     )
+})
+
+app.post("/file/create_file",(req,res)=>{
+    const {fName,fData} = req.body;
+
+    let response = create_file (fData,fName);
+    res.json(response)
 })
 
 // localhost:3000/file/check_child?dirname="dumy"
